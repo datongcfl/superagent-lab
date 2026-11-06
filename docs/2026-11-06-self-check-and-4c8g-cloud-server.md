@@ -110,13 +110,13 @@
 
 **结论：知识库自检不通过。** 当前既不能列出知识空间，也不能读取已知空间下的节点；这与仓库 `AGENTS.md` 中「归档到内部知识库当前不可用（飞书 user 身份未开通）」的记录一致。
 
-**恢复路径（需人工操作）**
+**恢复路径（两条路径，按需选择；均需人工操作）**
 
-1. 由应用开发者在飞书开放平台为应用申请并发布上述 wiki scope；若还要读文档正文，再补 `docx:document:readonly`。
-2. 经用户明确确认后，把 `strict-mode` 从 `bot` 切换为 `off` 或 `user`，完成用户扫码登录。
-3. 重新执行 `lark-cli wiki +space-list` 与 `lark-cli wiki +node-list` 验证；两条命令返回 `ok: true` 才算通过。
+- **Bot 路径**：由应用开发者在飞书开放平台为应用申请并发布上述 wiki scope；若还要读文档正文，再补 `docx:document:readonly`。当前 `strict-mode=bot`，这条路径不需要用户扫码。
+- **用户身份路径**：经用户明确确认后，把 `strict-mode` 从 `bot` 切换为 `off` 或 `user`，完成用户扫码登录。按部署记录，用户 token 已含 `wiki:node:retrieve` 等 scope；实际以登录后 `lark-cli auth check --scope ...` 的结果为准，不足再补应用 scope。
+- 任一路径完成后，重新执行 `lark-cli wiki +space-list` 与 `lark-cli wiki +node-list` 验证；两条命令返回 `ok: true` 才算通过。
 
-本轮未执行第 1、2 步：前者需要开发者后台权限，后者属于配置变更且 CLI 明确要求人工确认。
+本轮未执行上述任一路径：应用 scope 需要开发者后台权限；`strict-mode` 切换属于配置变更，CLI 明确要求人工确认。
 
 ## 5. 4 核 8G 云服务器比价
 
